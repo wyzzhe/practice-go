@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"path"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,10 +14,21 @@ type animal struct {
 	Cat string `json:"cat" form:"cat"`
 }
 
+// 定义一个处理函数耗时的中间件
+func timeMiddle(c *gin.Context) {
+	fmt.Println("time in")
+	start := time.Now()
+	c.Next()
+	cost := time.Since(start)
+	fmt.Println(cost)
+	fmt.Println("time out")
+}
+
 func main() {
 	animal := new(animal)
 	// gin引擎实例
 	r := gin.Default()
+	r.Use(timeMiddle)
 	// 路由方法
 	// Query String
 	r.GET("/hello", func(c *gin.Context) {
