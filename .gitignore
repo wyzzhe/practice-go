@@ -1,0 +1,56 @@
+# 二进制文件
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 测试二进制文件
+*.test
+
+# 输出目录
+/bin/
+/pkg/
+
+# Go 工作区文件
+go.work
+go.work.sum
+
+# 依赖目录
+/vendor/
+
+# 环境文件
+.env
+.env.local
+
+# IDE 特定文件
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 调试文件
+debug
+
+# 构建输出
+/dist/
+
+# 覆盖文件
+*.out
+
+# 依赖锁定文件
+go.sum
+
+# 本地开发配置文件
+local.*
+
+# 日志文件
+*.log
+
+# 操作系统生成文件
+.DS_Store
+Thumbs.db
+
+# 模块目录 (Go 1.11+)
+/go.mod
+/go.sum
