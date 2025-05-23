@@ -11,7 +11,7 @@ ENV GO111MODULE=on
 COPY . .
 
 # 构建 Go 应用
-RUN go build -o app .
+RUN go build -o mcp-server .
 
 # 使用一个轻量级的 Linux 镜像作为最终镜像
 FROM scratch AS deploy
@@ -20,8 +20,8 @@ FROM scratch AS deploy
 WORKDIR /app
 
 # 将构建好的二进制文件和 vendor 目录从构建阶段复制到最终镜像
-COPY --from=builder /build/app .
+COPY --from=builder /build/mcp-server .
 COPY --from=builder /build/vendor ./vendor
 
 # 启动应用
-CMD ["/app"]
+CMD ["/app/mcp-server"]
