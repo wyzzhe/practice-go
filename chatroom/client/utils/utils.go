@@ -9,6 +9,8 @@ import (
 	"github.com/wyzzhe/practice-go/chatroom/common/message"
 )
 
+// 注意：工具类函数不应该打印错误，防止重复打印，应该交由中间层（打印业务错误）或顶层函数（打印所有未捕获的错误）处理
+
 // 从 客户端 / 服务器 读取发来的消息
 func ReadPkg(conn net.Conn) (mes message.Message, err error) {
 	// 客户端消息读取到缓冲区

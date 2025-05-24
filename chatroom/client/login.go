@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/wyzzhe/practice-go/chatroom/client/utils"
 	"github.com/wyzzhe/practice-go/chatroom/common/message"
-	"github.com/wyzzhe/practice-go/chatroom/utils"
 )
 
 func login(userId int, userPwd string) (err error) {
