@@ -2,10 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"net"
-
-	"github.com/wyzzhe/practice-go/chatroom/server/utils"
 )
 
 // 处理客户端连接
@@ -17,26 +14,10 @@ func processConn(conn net.Conn) {
 		Conn: conn,
 	}
 
-	// 初始化Transfer结构体
-	t := &utils.Transfer{
-		Conn: conn,
-	}
-
-	// 循环读取当前客户端消息
-	for {
-		mes, err := t.ReadPkg()
-		if err != nil {
-			if err == io.EOF {
-				fmt.Println("当前客户端已退出，对应的服务端连接协程退出")
-				return
-			}
-			fmt.Println("readPkg err=", err)
-		}
-		fmt.Println("读取到的消息体为 mes=", mes)
-		err = p.ProcessMessage(&mes)
-		if err != nil {
-			return
-		}
+	err := p.ProcessConn()
+	if err != nil {
+		fmt.Println("客户端和服务器通讯协程错误 failed, err =", err)
+		return
 	}
 }
 
