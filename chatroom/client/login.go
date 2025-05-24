@@ -10,6 +10,7 @@ import (
 )
 
 func login(userId int, userPwd string) (err error) {
+	// 客户端向服务器请求tcp连接
 	conn, err := net.Dial("tcp", "localhost:8889")
 	if err != nil {
 		fmt.Println("net.Dial err =", err)

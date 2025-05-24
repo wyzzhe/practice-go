@@ -9,8 +9,9 @@ import (
 func process(conn net.Conn) {
 	defer conn.Close()
 
-	// 循环读取客户端连接
+	// 循环读取当前客户端消息
 	for {
+		//客户端消息读取到缓冲区
 		buf := make([]byte, 8096)
 		n, err := conn.Read(buf[:4])
 		if n != 4 || err != nil {
@@ -37,8 +38,7 @@ func main() {
 			fmt.Println("listen.Accept err =", err)
 			return
 		}
-
+		// 异步处理客户端连接
 		go process(conn)
 	}
-
 }
