@@ -3,6 +3,7 @@ package message
 const (
 	LoginMesType    = "LoginMes"
 	LoginResMesType = "LoginResMes"
+	RegisterMesType = "RegisterMes"
 )
 
 // 客户端与服务器之间传输的消息体
@@ -23,3 +24,6 @@ type LoginResMes struct {
 	Code  int    `json:"code"`  // 500=未注册 200=成功
 	Error string `json:"error"` // 返回错误信息
 }
+
+// 注册消息
+type RegisterMes struct{}
