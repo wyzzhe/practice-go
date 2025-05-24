@@ -9,8 +9,13 @@ import (
 	"github.com/wyzzhe/practice-go/chatroom/server/utils"
 )
 
+// 定义用户处理结构体
+type UserProcess struct {
+	Conn net.Conn // 客户端与服务器的连接
+}
+
 // 处理登录请求
-func ServerProcessLogin(conn net.Conn, mes *message.Message) (err error) {
+func (u *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	// 解析登录请求
 	var loginMes message.LoginMes
 	err = json.Unmarshal([]byte(mes.Data), &loginMes)
@@ -51,12 +56,16 @@ func ServerProcessLogin(conn net.Conn, mes *message.Message) (err error) {
 		return
 	}
 
+	// 初始化Transfer结构体
+	t := &utils.Transfer{
+		Conn: u.Conn,
+	}
 	// 发送消息体
-	err = utils.WritePkg(conn, data)
+	err = t.WritePkg(data)
 	return
 }
 
 // 处理注册请求
-func ServerProcessRegister(conn net.Conn) {
+func (u *UserProcess) ServerProcessRegister() {
 
 }
