@@ -15,7 +15,7 @@ type UserProcess struct {
 }
 
 // 处理登录请求
-func (u *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
+func (up *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	// 解析登录请求
 	var loginMes message.LoginMes
 	err = json.Unmarshal([]byte(mes.Data), &loginMes)
@@ -58,7 +58,7 @@ func (u *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 
 	// 初始化Transfer结构体
 	t := &utils.Transfer{
-		Conn: u.Conn,
+		Conn: up.Conn,
 	}
 	// 发送消息体
 	err = t.WritePkg(data)

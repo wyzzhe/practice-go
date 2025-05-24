@@ -1,4 +1,4 @@
-package main
+package process
 
 import (
 	"encoding/binary"
@@ -10,7 +10,11 @@ import (
 	"github.com/wyzzhe/practice-go/chatroom/common/message"
 )
 
-func login(userId int, userPwd string) (err error) {
+// 定义UserProcess结构体
+type UserProcess struct {
+}
+
+func (up *UserProcess) Login(userId int, userPwd string) (err error) {
 	// 客户端向服务器请求tcp连接
 	conn, err := net.Dial("tcp", "localhost:8889")
 	if err != nil {
@@ -63,8 +67,13 @@ func login(userId int, userPwd string) (err error) {
 		return
 	}
 
+	// 初始化Transfer结构体
+	t := &utils.Transfer{
+		Conn: conn,
+	}
+
 	// 客户端接收服务器返回消息
-	resMes, err := utils.ReadPkg(conn)
+	resMes, err := t.ReadPkg()
 	if err != nil {
 		fmt.Printf("utils.ReadPkg(conn) failed err=%s\n", err)
 		return
@@ -79,6 +88,8 @@ func login(userId int, userPwd string) (err error) {
 	// 登陆成功
 	if loginResMes.Code == 200 {
 		fmt.Println("登陆成功")
+		// 显示登录菜单
+		ShowMenu(userId)
 	} else if loginResMes.Code == 500 {
 		// 登陆失败
 		fmt.Println("登陆失败，", loginResMes.Error)
