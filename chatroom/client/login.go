@@ -46,7 +46,7 @@ func login(userId int, userPwd string) (err error) {
 	var buf [4]byte
 	binary.BigEndian.PutUint32(buf[:], pkgLen)
 
-	// 客户端向服务器发送消息
+	// 客户端向服务器发送消息头
 	n, err := conn.Write(buf[:])
 	if n != 4 || err != nil {
 		fmt.Println("conn.Write(bytes) err=", err)
@@ -54,5 +54,13 @@ func login(userId int, userPwd string) (err error) {
 	}
 
 	fmt.Printf("客户端成功发送消息长度%d, 发送内容%s", len(data), string(data))
+
+	// 客户端向服务器发送消息体
+	_, err = conn.Write(data)
+	if err != nil {
+		fmt.Printf("conn.Write(data) failed err=%s", err)
+		return
+	}
+
 	return
 }
