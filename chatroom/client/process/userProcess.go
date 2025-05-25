@@ -88,6 +88,8 @@ func (up *UserProcess) Login(userId int, userPwd string) (err error) {
 	// 登陆成功
 	if loginResMes.Code == 200 {
 		fmt.Println("登陆成功")
+		// 持续读取服务器返回消息
+		go serverProcessMes(conn)
 		// 显示登录菜单
 		ShowMenu(userId)
 	} else if loginResMes.Code == 500 {
@@ -95,4 +97,20 @@ func (up *UserProcess) Login(userId int, userPwd string) (err error) {
 		fmt.Println("登陆失败，", loginResMes.Error)
 	}
 	return
+}
+
+func serverProcessMes(conn net.Conn) {
+	for {
+		fmt.Println("客户端等待读取服务器返回的消息")
+		// 初始化Transfer传输者结构体
+		t := &utils.Transfer{
+			Conn: conn,
+		}
+		mes, err := t.ReadPkg()
+		if err != nil {
+			fmt.Println("t.ReadPkg() failed err=", err)
+			return
+		}
+		fmt.Printf("读取到消息 mes=%v", mes)
+	}
 }

@@ -16,7 +16,7 @@ func ShowMenu(userId int) {
 		fmt.Println("\t\t\t 请选择(1-4)...")
 
 		var key int
-		fmt.Scanf("%d", &key)
+		fmt.Scanf("%d\n", &key)
 		switch key {
 		case 1:
 			fmt.Println("显示在线用户列表")
